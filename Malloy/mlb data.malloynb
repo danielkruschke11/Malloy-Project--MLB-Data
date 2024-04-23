@@ -1,0 +1,44 @@
+>>>malloy
+// Enter Malloy here
+source: savant_data is duckdb.table(
+    'C:/Users/danie/OneDrive/Documents/Malloy/savant_data.csv'
+    )
+source: pitcher_births is duckdb.table(
+    'C:/Users/danie/OneDrive/Documents/Malloy/pitcher_births.csv'
+    )
+
+source: player_births is duckdb.table(
+    'C:/Users/danie/OneDrive/Documents/Malloy/player_births.csv'
+    )
+>>>malloy
+# scatter_chart
+run: savant_data -> {
+  group_by: exit_velocity_avg
+  group_by: slg_percent
+  limit: 5000
+}
+>>>malloy
+# scatter_chart
+run: savant_data -> {
+  aggregate: runs_per_pa is sum(r_run) / sum(pa)
+  group_by: k_percent
+  limit: 5000
+}
+>>>malloy
+# bar_chart
+run: savant_data -> {
+  group_by: `year`
+  aggregate: home_runs is sum(home_run)
+}
+>>>malloy
+# shape_map
+run: pitcher_births -> {
+  group_by: State
+  aggregate: war_total is sum(WAR)
+}
+>>>malloy
+# shape_map
+run: player_births -> {
+  group_by: State
+  aggregate: hr_total is sum(HR)
+}
